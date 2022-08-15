@@ -288,6 +288,7 @@ const CreateSentences = ({
       if (e.key === '0' || e.key === ' ') {
         e.preventDefault()
         onReloadSentenceRandom()
+        setAllowSpeak(false)
       }
       if (e.key.toLowerCase() === '2') {
         // setScore(prev => prev + 1)
@@ -311,6 +312,9 @@ const CreateSentences = ({
       if (e.key.toLowerCase() === 'p') {
         setAllowSpeak(prev => !prev)
       }
+      if (e.key.toLowerCase() === 's') {
+        setAllowSpeak(true)
+      }
       if (e.key.toLowerCase() === 'insert') {
         setShowProgressBar(true)
       }
@@ -318,6 +322,7 @@ const CreateSentences = ({
         setShowProgressBar(false)
         setShowAnswer(false)
         onReloadSentenceRandom()
+        setAllowSpeak(false)
       }
 
       // if (e.key === 'c') {
@@ -411,6 +416,7 @@ const CreateSentences = ({
           <div className="after word">{dataSentence.sentence}</div>
         )}
         <div className="translation">{translation(dataSentence.sentence)}</div>
+        <div className="translation-en">{dataSentence.sentence}</div>
         <ProgressBar
           isLoading={showProgressBar}
           onEnded={() => setShowProgressBar(false)}

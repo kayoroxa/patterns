@@ -8,6 +8,8 @@ export default function translation(fraseEn: string) {
     ['am(?=.*ing)', 'está'],
     ['the first person', 'a primeira pessoa'],
     ['did', '🔙'],
+    ["(would not|wouldn't)", 'não iria'],
+    ['would', 'iria'],
     ['can not', 'não pode'],
     ["can't", 'não pode'],
     ['so smart', 'muito inteligente'],
@@ -28,6 +30,7 @@ export default function translation(fraseEn: string) {
     ['have', 'tem'],
     ['has', 'tem'],
     ['won', 'ganhou'],
+    ['win', 'ganha'],
     ['buy', 'compra'],
     ['a car', 'um carro'],
     ['a house', 'uma casa'],
@@ -44,6 +47,7 @@ export default function translation(fraseEn: string) {
     ['study', 'estuda'],
     ['why', 'porque'],
     ['when', 'quando'],
+
     ['where', 'onde'],
     // ['do', 'PRESENTE'],
     // ['does', 'PRESENTE'],
@@ -57,6 +61,7 @@ export default function translation(fraseEn: string) {
     ['is', 'é'],
     ['will', 'vai'],
     ['am', 'sou'],
+
     ['vai (nós|ele|ela|eles|você|eu)', `$1 vai`],
     ['não pode (nós|ele|ela|eles|você|eu)', `$1 não pode`],
     ['pode (nós|ele|ela|eles|você|eu)', `$1 pode`],
@@ -68,6 +73,8 @@ export default function translation(fraseEn: string) {
     ['vais', `vai`],
     ['nãos', `não`],
     ['vai tem', `vai ter`],
+    ['vai não', 'não vai'],
+    ['(does|do) não', 'não'],
 
     ['não ir', `não vai`],
     ['nós ir', `nós vamos`],
@@ -75,6 +82,9 @@ export default function translation(fraseEn: string) {
     ['você ir', `você vai`],
     ['eu não vai', `eu não vou`],
     ['nós não vai', `nós não vamos`],
+
+    ['é bem', 'está bem'],
+    ['era bem', 'estava bem'],
   ]
 
   const frase = fraseEn.toLowerCase()
@@ -85,5 +95,5 @@ export default function translation(fraseEn: string) {
     return acc.replace(regex, pt)
   }, frase)
 
-  return fraseTraduzida
+  return fraseTraduzida.includes('?') ? '??? ' + fraseTraduzida : fraseTraduzida
 }

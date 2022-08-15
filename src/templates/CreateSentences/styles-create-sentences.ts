@@ -14,6 +14,12 @@ export const ContainerCreateSentences = styled.div`
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
     -moz-box-sizing: border-box; /* Firefox, other Gecko */
     box-sizing: border-box;
+
+    -webkit-user-drag: none;
+  }
+
+  *::selection {
+    color: #3bceac;
   }
 
   .app {
@@ -143,6 +149,12 @@ export const ContainerCreateSentences = styled.div`
   .translation {
     position: fixed;
     top: 20px;
+    right: 20px;
+  }
+
+  .translation-en {
+    position: fixed;
+    top: 40px;
     right: 20px;
   }
 `
