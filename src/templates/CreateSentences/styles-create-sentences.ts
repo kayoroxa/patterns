@@ -1,10 +1,12 @@
 import styled from 'styled-components'
+const dark = false
+const aula = true
 
 export const ContainerCreateSentences = styled.div`
   max-width: 100vw;
   height: 100vh;
   min-height: 100vh;
-  background: #272a41;
+  background: ${dark ? '#272a41' : '#ecf1f3'};
 
   * {
     font-size: 1.3rem;
@@ -52,14 +54,14 @@ export const ContainerCreateSentences = styled.div`
 
   .al {
     padding: 15px;
-    border: 3px solid #4a507c;
+    border: 3px solid ${dark ? '#4a507c' : '#4a507c'};
     border-style: dashed;
     max-height: 85vh;
     flex-direction: column;
     transition: all 0.3s ease-in-out;
 
     :hover {
-      border-color: white;
+      border-color: ${dark ? '#4a507c' : '#4a507c'};
     }
   }
 
@@ -84,6 +86,7 @@ export const ContainerCreateSentences = styled.div`
     transition: all 0.3s ease-in-out;
 
     .tag {
+      display: ${aula ? 'none' : 'block'};
       height: 100%;
       width: 10px;
       right: -1px;
@@ -98,12 +101,13 @@ export const ContainerCreateSentences = styled.div`
 
   .word {
     overflow: auto;
-    background: #545a87;
+    background: ${dark ? '#545a87' : 'hsl(240, 1%, 86%)'};
     padding: 5px 13px;
     border-radius: 5px;
     text-align: center;
     text-transform: lowercase;
     overflow: hidden;
+    color: ${dark ? 'white' : 'black'};
 
     /*  */
     :hover {
@@ -131,7 +135,7 @@ export const ContainerCreateSentences = styled.div`
     transition: 0.1s;
 
     :hover {
-      background: #545a87;
+      background: ${dark ? '#545a87' : '#545a87'};
       transform: scale(1.05);
     }
   }
@@ -142,8 +146,8 @@ export const ContainerCreateSentences = styled.div`
   }
 
   .emphasis {
-    background: white !important;
-    color: black !important;
+    background: ${dark ? 'white' : '#545a87'} !important;
+    color: ${dark ? 'black' : 'white'} !important;
   }
 
   .translation {

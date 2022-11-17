@@ -40,7 +40,7 @@ interface IProps {
     currentIndex: number
     length: number
   }
-  language?: string
+  language?: 'en' | 'fr' | 'es' | 'pt'
   anki: {
     [key: string]: number
   }
@@ -270,6 +270,12 @@ const CreateSentences = ({
     onReloadSentence()
   }, [data, lang])
 
+  const { speak } = useSay(
+    dataSentence.sentence.replace(/[^\w.!?\s]/g, ''),
+    language,
+    true //lang == 'en' && allowSpeak
+  )
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Enter' || e.key === 'd') {
@@ -288,7 +294,7 @@ const CreateSentences = ({
       if (e.key === '0' || e.key === ' ') {
         e.preventDefault()
         onReloadSentenceRandom()
-        setAllowSpeak(false)
+        // setAllowSpeak(false)
       }
       if (e.key.toLowerCase() === '2') {
         // setScore(prev => prev + 1)
@@ -310,10 +316,10 @@ const CreateSentences = ({
         setShowInfos(prev => !prev)
       }
       if (e.key.toLowerCase() === 'p') {
-        setAllowSpeak(prev => !prev)
+        // setAllowSpeak(prev => !prev)
       }
       if (e.key.toLowerCase() === 's') {
-        setAllowSpeak(true)
+        // setAllowSpeak(true)
       }
       if (e.key.toLowerCase() === 'insert') {
         setShowProgressBar(true)
@@ -322,7 +328,10 @@ const CreateSentences = ({
         setShowProgressBar(false)
         setShowAnswer(false)
         onReloadSentenceRandom()
-        setAllowSpeak(false)
+        // setAllowSpeak(false)
+      }
+      if (e.key.toLowerCase() === 'f') {
+        speak()
       }
 
       // if (e.key === 'c') {
@@ -339,12 +348,6 @@ const CreateSentences = ({
       window.removeEventListener('keydown', handleKeyDown)
     }
   }, [data, dataSentence, anki])
-
-  useSay(
-    dataSentence.sentence.replace(/[^\w.!?\s]/g, ''),
-    language,
-    lang == 'en' && allowSpeak
-  )
 
   return (
     <ContainerCreateSentences>

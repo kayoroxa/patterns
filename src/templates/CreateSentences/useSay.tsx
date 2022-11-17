@@ -16,7 +16,7 @@ function setSpeech() {
 
 export function useSay(
   text: string | null,
-  language?: string,
+  language?: 'en' | 'fr' | 'es' | 'pt' | null,
 
   on: boolean = true
 ) {
@@ -32,7 +32,7 @@ export function useSay(
       'speechSynthesis' in window
     ) {
       const utter = new SpeechSynthesisUtterance()
-      utter.lang = 'en_US'
+
       console.log('1 vezinha')
 
       setSpeech().then(() => {
@@ -41,20 +41,25 @@ export function useSay(
         var selectedOption = 'Google US English'
 
         if (language === 'en') {
+          utter.lang = 'en_US'
           selectedOption = 'Google US English'
         }
         if (language === 'fr') {
+          utter.lang = 'fr-FR'
           selectedOption = 'Google français'
         }
         if (language === 'es') {
+          utter.lang = 'es-ES'
           selectedOption = 'Google español'
         }
         if (language === 'pt') {
+          utter.lang = 'pt-BR'
           selectedOption = 'Google português'
         }
 
         voices.forEach(voice => {
           if (voice.name === selectedOption) {
+            console.log(voice)
             utter.voice = voice
           }
         })
@@ -69,24 +74,24 @@ export function useSay(
     if (utterThis && text && config) {
       stop()
       utterThis.text = text
-      speak()
+      // speak()
     }
   }, [text])
 
-  useEffect(() => {
-    // keydown
-    const keydown = (e: any) => {
-      if (e.key.toLowerCase() === 'r' || e.key === 's') {
-        speak()
-      }
-    }
+  // useEffect(() => {
+  //   // keydown
+  //   const keydown = (e: any) => {
+  //     if (e.key.toLowerCase() === 'r' || e.key === 's') {
+  //       speak()
+  //     }
+  //   }
 
-    window.addEventListener('keydown', keydown)
+  //   window.addEventListener('keydown', keydown)
 
-    return () => {
-      window.removeEventListener('keydown', keydown)
-    }
-  })
+  //   return () => {
+  //     window.removeEventListener('keydown', keydown)
+  //   }
+  // })
 
   function speak() {
     if (utterThis && on) {

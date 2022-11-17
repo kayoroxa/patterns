@@ -47,6 +47,10 @@ export default function ProgressBar({ isLoading, onEnded }: IProps) {
       }, 30)
     } else {
       clearInterval(timer)
+      if (audio.current && isLoading) {
+        audio.current.pause()
+        audio.current.currentTime = 0
+      }
     }
     return () => clearInterval(timer)
   }, [isLoading])

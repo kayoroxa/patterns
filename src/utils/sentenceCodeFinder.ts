@@ -5,9 +5,15 @@ export default function codeFinder(frase: string[]) {
   )
   frase = fraseClean
   const dict = [
-    { p: ['i'], codes: ['do', "don't", 'am', 'have'] },
-    { p: ['you', 'we', 'they', 'guys'], codes: ['do', "don't", 'are', 'have'] },
-    { p: ['he', 'she', 'it', 'mom'], codes: ['does', "doesn't", 'is', 'has'] },
+    { p: ['i'], codes: ['do', "don't", 'am', 'have', 'was', "wasn't"] },
+    {
+      p: ['you', 'we', 'they', 'guys'],
+      codes: ['do', "don't", 'are', 'have', 'were', "weren't"],
+    },
+    {
+      p: ['he', 'she', 'it', 'mom'],
+      codes: ['does', "doesn't", 'is', 'has', 'was', "wasn't"],
+    },
   ]
 
   const newFrase = frase.reduce((acc: string[], word) => {
