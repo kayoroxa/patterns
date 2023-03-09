@@ -278,6 +278,9 @@ const CreateSentences = ({
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      const element = document.activeElement
+      if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') return
+
       if (e.key === 'Enter' || e.key === 'd') {
         // setScore(0)
         // setLevel(2)

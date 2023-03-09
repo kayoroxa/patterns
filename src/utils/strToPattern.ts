@@ -20,7 +20,10 @@ function transform1(string) {
 
 export function strToPattern(bigString: string) {
   debugger
-  bigString = bigString.trim()
+  if (!bigString) return false
+  if (typeof bigString !== 'string') return bigString
+  debugger
+  bigString = bigString?.trim()
 
   const bigData = bigString.split(/\/\/+/g).map(transform1)
 
