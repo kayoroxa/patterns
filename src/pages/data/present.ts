@@ -1,4 +1,41 @@
+import { strToPattern } from '../../utils/strToPattern'
+
+const str = `
+All that matters is, {m} after {s} i {action}
+
+m:
+caio
+
+s:
+School 🏫
+Lunch 🍝
+Class
+
+action:
+study english 🎓
+do exercise 🏋🏼
+drink water 💦
+
+////////
+
+All that matters is, {m} after {s} i {action}
+
+m:
+rocha
+
+s:
+School 🏫
+Lunch 🍝
+Class
+
+action:
+study english 🎓
+do exercise 🏋🏼
+drink water 💦
+`
+
 export const bigData = [
+  ...strToPattern(str),
   {
     rawSentence: 'All that matters is, {m} after {s} i {action}',
     replacements: [
@@ -173,3 +210,5 @@ export const bigData = [
     ],
   },
 ]
+
+console.log(bigData)

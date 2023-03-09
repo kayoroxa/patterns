@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-const dark = false
+const dark = true
 const aula = true
 
 export const ContainerCreateSentences = styled.div`
