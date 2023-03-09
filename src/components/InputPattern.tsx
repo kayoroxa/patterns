@@ -16,20 +16,27 @@ export default function InputPattern({
 
   useEffect(() => {
     if (textArea.current) {
-      textArea.current.value = JSON.stringify(scriptRaw)
+      textArea.current.value = JSON.stringify(scriptRaw, null, 2)
     }
   }, [])
 
   return (
     <textarea
       id="message"
+      style={{
+        width: '90%',
+        height: '600px',
+        right: '0px',
+        margin: 'auto',
+        marginTop: '20px',
+      }}
       ref={textArea}
       // rows="4"
       className=""
       placeholder={'Coloque seus pattern aqui...'}
       // value={scriptRaw}
       onFocus={e => {
-        e.currentTarget.value = JSON.stringify(scriptRaw)
+        e.currentTarget.value = JSON.stringify(scriptRaw, null, 2)
       }}
       onBlur={e => {
         setScriptRaw(JSON.parse(e.currentTarget.value))

@@ -141,7 +141,7 @@ export const ContainerCreateSentences = styled.div`
   }
 
   .after {
-    position: fixed;
+    position: absolute;
     bottom: 30px;
   }
 
@@ -151,13 +151,13 @@ export const ContainerCreateSentences = styled.div`
   }
 
   .translation {
-    position: fixed;
+    position: absolute;
     top: 20px;
     right: 20px;
   }
 
   .translation-en {
-    position: fixed;
+    position: absolute;
     top: 40px;
     right: 20px;
   }
