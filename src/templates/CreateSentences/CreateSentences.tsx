@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import { SetStateAction, useEffect, useState } from 'react'
+import Cell from '../../components/cell'
 import ProgressBar from '../../components/loader'
 import sentenceCodeFinder from '../../utils/sentenceCodeFinder'
 import translation from '../../utils/translation'
@@ -377,7 +378,7 @@ const CreateSentences = ({
                   <div className="al" key={index}>
                     <div className="al-inside">
                       {column.cells.map((v, key) => (
-                        <div className="cell">
+                        <Cell>
                           <div
                             className="tag"
                             style={{
@@ -395,24 +396,26 @@ const CreateSentences = ({
                           >
                             {v.text}
                           </div>
-                        </div>
+                        </Cell>
                       ))}
                     </div>
                   </div>
                 )
               } else {
                 return (
-                  <div className="cell">
-                    <div
-                      className={`word ${
-                        column.cells[0].isEmphasis && showAnswer
-                          ? 'emphasis'
-                          : ''
-                      }`}
-                    >
-                      {column.cells[0].text}
+                  <Cell>
+                    <div className="cell">
+                      <div
+                        className={`word ${
+                          column.cells[0].isEmphasis && showAnswer
+                            ? 'emphasis'
+                            : ''
+                        }`}
+                      >
+                        {column.cells[0].text}
+                      </div>
                     </div>
-                  </div>
+                  </Cell>
                 )
               }
             })}

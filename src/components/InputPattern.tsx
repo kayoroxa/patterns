@@ -9,14 +9,15 @@ export default function InputPattern({
 }) {
   const [scriptRaw, setScriptRaw] = useState<string>(initialValue || '')
   const textArea = useRef<HTMLTextAreaElement>(null)
+
   debugger
   useEffect(() => {
-    onChange(typeof scriptRaw === 'string' ? JSON.parse(scriptRaw) : scriptRaw)
+    onChange(scriptRaw)
   }, [scriptRaw])
 
   useEffect(() => {
     if (textArea.current) {
-      textArea.current.value = JSON.stringify(scriptRaw, null, 2)
+      textArea.current.value = scriptRaw
     }
   }, [])
 
@@ -36,10 +37,12 @@ export default function InputPattern({
       placeholder={'Coloque seus pattern aqui...'}
       // value={scriptRaw}
       onFocus={e => {
-        e.currentTarget.value = JSON.stringify(scriptRaw, null, 2)
+        e.currentTarget.value = scriptRaw
       }}
       onBlur={e => {
-        setScriptRaw(JSON.parse(e.currentTarget.value))
+        if (e.currentTarget.value) {
+          setScriptRaw(e.currentTarget.value)
+        }
       }}
       // onChange={e => setScriptRaw(e.currentTarget.value)}
       autoComplete="off"

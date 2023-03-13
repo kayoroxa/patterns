@@ -3,7 +3,7 @@ import CreateSentences from '../templates/CreateSentences'
 // import { bigData } from './data/fr'
 // import { useLocalStorage } from 'react-use'
 import InputPattern from '../components/InputPattern'
-import { strToPattern } from '../utils/strToPattern'
+import { strToPattern, Type } from '../utils/strToPattern'
 import { bigData as _bigData } from './data/present'
 
 const after = [
@@ -17,9 +17,9 @@ export default function PlayPage() {
   const [indexData, setIndexData] = useState(0)
   const [anki, setAnki] = useState<{ [key: string]: number }>({})
 
-  const test = useLocalStorage('patterns', _bigData)
-  debugger
-  const [bigData, setBigData] = useState(_bigData)
+  const [initialState, setInitialState] = useLocalStorage('patterns', '')
+  // debugger
+  const [bigData, setBigData] = useState<Type[]>(_bigData)
 
   return (
     <div>
@@ -67,9 +67,13 @@ export default function PlayPage() {
       <InputPattern
         onChange={pattern => {
           if (!pattern) return
-          setBigData(strToPattern(pattern))
+          const patterns = strToPattern(pattern)
+
+          if (!patterns) return
+          setInitialState(pattern)
+          setBigData(patterns)
         }}
-        initialValue={bigData}
+        initialValue={initialState}
       />
     </div>
   )
