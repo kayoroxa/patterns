@@ -9,5 +9,9 @@ export function getLangAlternative(
   } else if (lang === 'en' && isArray(alternative)) {
     alternative = alternative[0]
   }
-  return isArray(alternative) ? alternative[0] : alternative
+
+  if (isArray(alternative)) return alternative[0]
+  if (typeof alternative === 'string') return alternative
+
+  return ''
 }

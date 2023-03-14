@@ -1,4 +1,4 @@
-import { template } from '../../utils/funcs'
+import { template } from '../utils/funcs'
 
 export const bigData = [
   {

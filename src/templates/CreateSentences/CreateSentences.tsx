@@ -110,9 +110,9 @@ const CreateSentences = ({
     // const index = Math.floor(Math.random() * min)
     const indexRandom = Math.floor(Math.random() * arr.length)
 
-    const sorted = [
-      ...new Map(Object.entries(anki).sort((a, b) => a[1] - b[1])),
-    ].filter(item => !dataSentence.sentenceDivided.includes(item[0]))
+    const sorted = Array.from(Object.entries(anki))
+      .sort((a, b) => a[1] - b[1])
+      .filter(item => !dataSentence.sentenceDivided.includes(item[0]))
 
     const randomArr = Array(2)
       .fill(0)
