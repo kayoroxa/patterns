@@ -13,7 +13,7 @@ export default function CellContainer({ children }: IProps) {
 
   return (
     <div
-      className="cell"
+      className={'cell' + (show ? ' show' : '')}
       style={{ opacity: show ? 1 : 0, cursor: 'pointer' }}
       onClick={handleClick}
     >

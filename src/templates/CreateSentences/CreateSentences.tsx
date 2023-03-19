@@ -104,7 +104,7 @@ const CreateSentences = ({
   }, [showProgressBar])
 
   function onReloadSentence() {
-    setDataSentence(generateBlocksData(data))
+    setDataSentence(generateBlocksData(data, false))
   }
   function onReloadSentenceRandom() {
     setDataSentence(generateBlocksData(data, true))
@@ -141,8 +141,8 @@ const CreateSentences = ({
 
     '1': () => {
       // setScore(prev => prev - 1)
-      onNotRemember()
       onReloadSentence()
+      onNotRemember()
     },
     h: () => {
       setShowAnswer(prev => !prev)

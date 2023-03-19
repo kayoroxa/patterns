@@ -56,6 +56,8 @@ export function generateBlocksData({
 }: Props) {
   let endSentence = false
 
+  console.log({ anki })
+
   const { rawSentence, replacements } = data
   const sentencePattern = rawSentence
     .split(/(\{.*?\})/g)
@@ -74,6 +76,7 @@ export function generateBlocksData({
         }, 1)
     )
     const isItTag = word.startsWith('{') && word.endsWith('}')
+
     if (isItTag) {
       const id: string = word.slice(1, -1)
 
