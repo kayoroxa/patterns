@@ -1,23 +1,24 @@
-import { useState } from 'react'
+import CellContainer from './cellContainer'
 
-interface IProps {
-  children: React.ReactNode[] | React.ReactNode
+interface Props {
+  data: {
+    isEmphasis: boolean
+    text: string
+    rawText: string
+  }
+  showAnswer?: boolean
 }
 
-export default function Cell({ children }: IProps) {
-  const [show, setShow] = useState(true)
-
-  function handleClick(event) {
-    if (event.ctrlKey) setShow(prev => !prev)
-  }
-
+export default function Cell({ data, showAnswer }: Props) {
   return (
-    <div
-      className="cell"
-      style={{ opacity: show ? 1 : 0, cursor: 'pointer' }}
-      onClick={handleClick}
-    >
-      {children}
-    </div>
+    <CellContainer>
+      <div className="cell">
+        <div
+          className={`word ${data.isEmphasis && showAnswer ? 'emphasis' : ''}`}
+        >
+          {data.text}
+        </div>
+      </div>
+    </CellContainer>
   )
 }

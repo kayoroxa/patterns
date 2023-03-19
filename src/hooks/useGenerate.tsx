@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react'
-import { IBlocks, IData } from '../templates/CreateSentences/CreateSentences'
 import { getLangAlternative } from '../templates/CreateSentences/funcs'
 import sentenceCodeFinderAndSanitize from '../utils/sentenceCodeFinder'
+import { IBlocks, IData } from '../utils/types'
 import { sampleArrayIndex } from '../utils/utils'
 
 interface MainProps {

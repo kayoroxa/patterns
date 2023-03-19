@@ -1,34 +1,14 @@
-import _ from 'lodash'
 import { SetStateAction, useEffect, useState } from 'react'
-import Cell from '../../components/cell'
+import BeforeColumn from '../../components/BeforeColumn'
+import Cell from '../../components/Cell'
+import ColumnBlocks from '../../components/Column'
 import ProgressBar from '../../components/loader'
 import { default as useGenerate } from '../../hooks/useGenerate'
+import useKey from '../../hooks/useKey'
 import translation from '../../utils/translation'
+import { IBlocks, IData, _AnkiData } from '../../utils/types'
 import { ContainerCreateSentences } from './styles-create-sentences'
 import { useSay } from './useSay'
-
-export interface IReplacement {
-  id: string
-  alternatives: (string | string[])[]
-}
-
-export interface IData {
-  rawSentence: string
-  replacements: IReplacement[]
-}
-
-export interface IBlocks {
-  sentence: string
-  sentenceDivided: string[]
-  dataBlocks: {
-    isColumn: boolean
-    cells: {
-      isEmphasis: boolean
-      text: string
-      rawText: string
-    }[]
-  }[]
-}
 
 interface IProps {
   data: IData
@@ -41,9 +21,7 @@ interface IProps {
     length: number
   }
   language?: 'en' | 'fr' | 'es' | 'pt'
-  anki: {
-    [key: string]: number
-  }
+  anki: _AnkiData
   setAnki: (
     value: SetStateAction<{
       [key: string]: number
@@ -142,81 +120,60 @@ const CreateSentences = ({
     true //lang == 'en' && allowSpeak
   )
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const element = document.activeElement
-      if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') return
+  //
 
-      if (e.key === 'Enter' || e.key === 'd') {
-        // setScore(0)
-        // setLevel(2)
+  const keys = {
+    enter: () => {
+      setAnki({})
+      onNext()
+    },
+    a: () => {
+      setAnki({})
+      onPrev()
+    },
+    '0': () => {
+      onReloadSentenceRandom()
+    },
+    '2': () => {
+      onReloadSentence()
+      onRemember()
+    },
 
-        setAnki({})
-        onNext()
-      }
-      if (e.key === 'a') {
-        // setScore(0)
-        // setLevel(2)
-        setAnki({})
-        onPrev()
-      }
-      if (e.key === '0' || e.key === ' ') {
-        e.preventDefault()
-        onReloadSentenceRandom()
-        // setAllowSpeak(false)
-      }
-      if (e.key.toLowerCase() === '2') {
-        // setScore(prev => prev + 1)
-        onReloadSentence()
-        onRemember()
-      }
-      if (e.key.toLowerCase() === '1') {
-        // setScore(prev => prev - 1)
-        onNotRemember()
-        onReloadSentence()
-      }
-      if (e.key.toLowerCase() === 'h') {
-        setShowAnswer(prev => !prev)
-      }
-      if (e.key.toLowerCase() === 'l') {
-        setLang(prev => (prev === 'en' ? 'pt' : 'en'))
-      }
-      if (e.key.toLowerCase() === 'escape') {
-        setShowInfos(prev => !prev)
-      }
-      if (e.key.toLowerCase() === 'p') {
-        // setAllowSpeak(prev => !prev)
-      }
-      if (e.key.toLowerCase() === 's') {
-        // setAllowSpeak(true)
-      }
-      if (e.key.toLowerCase() === 'insert') {
-        setShowProgressBar(true)
-      }
-      if (e.key.toLowerCase() === 'home') {
-        setShowProgressBar(false)
-        setShowAnswer(false)
-        onReloadSentenceRandom()
-        // setAllowSpeak(false)
-      }
-      if (e.key.toLowerCase() === 'f') {
-        speak()
-      }
+    '1': () => {
+      // setScore(prev => prev - 1)
+      onNotRemember()
+      onReloadSentence()
+    },
+    h: () => {
+      setShowAnswer(prev => !prev)
+    },
+    l: () => {
+      setLang(prev => (prev === 'en' ? 'pt' : 'en'))
+    },
+    escape: () => {
+      setShowInfos(prev => !prev)
+    },
+    p: () => {
+      // setAllowSpeak(prev => !prev)
+    },
+    s: () => {
+      // setAllowSpeak(true)
+    },
+    insert: () => {
+      setShowProgressBar(true)
+    },
+    home: () => {
+      setShowProgressBar(false)
+      setShowAnswer(false)
+      onReloadSentenceRandom()
+      // setAllowSpeak(false)
+    },
+    f: () => {
+      speak()
+    },
+  }
 
-      // if (e.key === 'c') {
-      //   console.log(dataSentence.sentence)
-      //   // copy to clipboard
-      //   const text = dataSentence.sentence
-      //   if (text) {
-      //     navigator.clipboard.writeText(text)
-      //   }
-      // }
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [data, dataSentence, anki])
+  useKey(keys, [data, dataSentence, anki])
 
   return (
     <ContainerCreateSentences>
@@ -225,63 +182,20 @@ const CreateSentences = ({
 
         {dataSentence.dataBlocks.length > 0 && (
           <div className="flow-container">
-            {before && (
-              <div className="al">
-                <div className="al-inside">
-                  {before.map((item, key) => (
-                    <div className="al-item word small" key={key}>
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+            {before && <BeforeColumn data={before} />}
 
             {dataSentence.dataBlocks.map((column, index) => {
               if (column.isColumn) {
                 return (
-                  <div className="al" key={index}>
-                    <div className="al-inside">
-                      {column.cells.map((v, key) => (
-                        <Cell>
-                          <div
-                            className="tag"
-                            style={{
-                              background: getColorIntensity(anki[v.rawText]),
-                            }}
-                          />
-
-                          <div
-                            className={`al-item word ${
-                              v.isEmphasis && showAnswer && _.sample([true])
-                                ? 'emphasis'
-                                : ''
-                            }`}
-                            key={key}
-                          >
-                            {v.text}
-                          </div>
-                        </Cell>
-                      ))}
-                    </div>
-                  </div>
+                  <ColumnBlocks
+                    key={index}
+                    columnData={column}
+                    anki={anki}
+                    showAnswer={showAnswer}
+                  />
                 )
               } else {
-                return (
-                  <Cell>
-                    <div className="cell">
-                      <div
-                        className={`word ${
-                          column.cells[0].isEmphasis && showAnswer
-                            ? 'emphasis'
-                            : ''
-                        }`}
-                      >
-                        {column.cells[0].text}
-                      </div>
-                    </div>
-                  </Cell>
-                )
+                return <Cell data={column.cells[0]} showAnswer={showAnswer} />
               }
             })}
           </div>
@@ -309,10 +223,3 @@ const CreateSentences = ({
 }
 
 export default CreateSentences
-
-function getColorIntensity(score: number) {
-  if (score === 0) return `rgb(88, 94, 151)`
-  else if (score >= 5) return `rgb(40, 189, 48)`
-  else if (score <= -9) return `rgb(255, 0, 0)`
-  return `rgb(${Math.min(Math.max(140 - score * 15, 0), 255)}, 120, 180)`
-}
