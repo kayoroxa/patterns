@@ -2,23 +2,22 @@ import _ from 'lodash'
 import { SetStateAction, useEffect, useState } from 'react'
 import Cell from '../../components/cell'
 import ProgressBar from '../../components/loader'
-import sentenceCodeFinderAndSanitize from '../../utils/sentenceCodeFinder'
+import { default as useGenerate } from '../../hooks/useGenerate'
 import translation from '../../utils/translation'
-import { getLangAlternative } from './funcs'
 import { ContainerCreateSentences } from './styles-create-sentences'
 import { useSay } from './useSay'
 
-interface IReplacement {
+export interface IReplacement {
   id: string
   alternatives: (string | string[])[]
 }
 
-interface IData {
+export interface IData {
   rawSentence: string
   replacements: IReplacement[]
 }
 
-interface IBlocks {
+export interface IBlocks {
   sentence: string
   sentenceDivided: string[]
   dataBlocks: {
@@ -62,7 +61,6 @@ const CreateSentences = ({
   anki,
   setAnki,
 }: IProps) => {
-  const [combinations, setCombinations] = useState(0)
   const [showAnswer, setShowAnswer] = useState(true)
   const [lang, setLang] = useState<'en' | 'pt'>('en')
   const [showInfos, setShowInfos] = useState(true)
@@ -105,150 +103,6 @@ const CreateSentences = ({
   //   }
   // }, [score])
 
-  const sampleArrayIndex = (arr: string[], isRandom?: boolean) => {
-    // const min = Math.min(arr.length, level)
-    // const index = Math.floor(Math.random() * min)
-    const indexRandom = Math.floor(Math.random() * arr.length)
-
-    const sorted = Array.from(Object.entries(anki))
-      .sort((a, b) => a[1] - b[1])
-      .filter(item => !dataSentence.sentenceDivided.includes(item[0]))
-
-    const randomArr = Array(2)
-      .fill(0)
-      .map(() => _.random(0, 10))
-
-    const sortedFind = sorted
-      .filter((_, index) => !randomArr.includes(index))
-      .find(item => arr.includes(item[0]))
-
-    const newIndex = arr.findIndex(v => v === sortedFind?.[0])
-
-    return {
-      randomIndex: sortedFind && !isRandom ? newIndex : indexRandom,
-      value: sortedFind ? arr[newIndex] : arr[indexRandom],
-    }
-  }
-
-  function generateBlocksData(data: IData, isRandom?: boolean): IBlocks {
-    let endSentence = false
-    const { rawSentence, replacements } = data
-    const sentencePattern = rawSentence
-      .split(/(\{.*?\})/g)
-      .map(v => v.trim())
-      .filter(item => item.length > 0)
-
-    let sentenceChoice: string[] = []
-    let rawSentenceChoice: string[] = []
-
-    const dataBlocks = sentencePattern.map((word, indexColumn) => {
-      setCombinations(
-        replacements
-          .map(v => v.alternatives)
-          .reduce((acc, cur) => {
-            return acc * cur.length
-          }, 1)
-      )
-      const isItTag = word.startsWith('{') && word.endsWith('}')
-      if (isItTag) {
-        const id: string = word.slice(1, -1)
-        let replacement = replacements.find(
-          replacement => replacement.id === id
-        )
-        if (replacement) {
-          replacement.alternatives = replacement.alternatives.map(v =>
-            v === '_' ? `${v}${indexColumn}` : v
-          )
-
-          let { randomIndex } = sampleArrayIndex(
-            replacement.alternatives.map(v => getLangAlternative(lang, v)),
-            isRandom
-          )
-
-          const andWithPunctuation = ['.', '!', '?'].some(p =>
-            sentenceChoice.slice(-1)[0]?.endsWith(p)
-          )
-
-          if (andWithPunctuation) endSentence = true
-
-          const column = replacement.alternatives.map((alternative, key) => {
-            // let alternativeEn = getLangAlternative('en', alternative)
-            alternative = getLangAlternative(lang, alternative)
-
-            const isEmphasis: boolean =
-              randomIndex === key && !alternative.includes('_') && !endSentence
-
-            let rawText: string = alternative
-
-            if (randomIndex === key) {
-              rawSentenceChoice.push(rawText)
-            }
-
-            if (isEmphasis) {
-              sentenceChoice.push(alternative.replace(/[-]/g, ''))
-              // sentenceChoice.push(
-              //   getOption(sentenceChoice, alternative.replace(/[-]/g, ''))
-              // )
-            }
-
-            const cellsLine = {
-              isEmphasis,
-              text: alternative.replace(/\d/g, ''),
-              rawText,
-            }
-
-            if (!Object.keys(anki).some(item => rawText === item)) {
-              setAnki(prev => {
-                const newPrev = { ...prev }
-                newPrev[
-                  rawText.replace(/[^\w\s\!\.\,\?\d\|\']/gi, '').trim()
-                ] = 0
-                return newPrev
-              })
-            }
-
-            return cellsLine
-          })
-
-          return {
-            isColumn: true,
-            cells: column,
-          }
-        }
-      }
-      if (!endSentence) {
-        rawSentenceChoice.push(word)
-        sentenceChoice.push(word)
-      }
-
-      return {
-        isColumn: false,
-        cells: [
-          {
-            isEmphasis: !endSentence,
-            text: word,
-            rawText: word,
-          },
-        ],
-      }
-    })
-
-    console.log({
-      sentenceChoice,
-      g: sentenceCodeFinderAndSanitize(sentenceChoice),
-    })
-    return {
-      sentenceDivided: rawSentenceChoice.map(v =>
-        v.replace(/[^\w\s\!\.\,\?\d\|\']/gi, '').trim()
-      ),
-      sentence: sentenceCodeFinderAndSanitize(sentenceChoice)
-        .join(' ')
-        .replace(/\s\'/g, "'")
-        .replace(/\sn\'t/g, "n't"),
-      dataBlocks,
-    }
-  }
-
   // useEffect(() => {
   //   console.log(
   //     Array(100)
@@ -257,6 +111,13 @@ const CreateSentences = ({
   //       .join('\n')
   //   )
   // }, [])
+
+  const { combinations, generateBlocksData } = useGenerate({
+    dataSentence,
+    anki,
+    setAnki,
+    lang,
+  })
 
   useEffect(() => {
     if (!showProgressBar) {

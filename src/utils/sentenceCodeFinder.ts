@@ -1,4 +1,4 @@
-export default function codeFinder(frase: string[]) {
+export function codeFinder(frase: string[]) {
   // remove caracteres
   const fraseClean = frase.map(word =>
     word
@@ -48,4 +48,8 @@ export default function codeFinder(frase: string[]) {
   }, [])
 
   return newFrase
+}
+
+export default function sentenceCodeFinderAndSanitize(frase: string[]) {
+  return codeFinder(frase)
 }
