@@ -1,7 +1,11 @@
 export default function codeFinder(frase: string[]) {
   // remove caracteres
   const fraseClean = frase.map(word =>
-    word.replace(/[^\w\s\!\.\,\?\d\|\']/gi, '').trim()
+    word
+      .replace(/\/.*?\//g, '')
+      .replace(/\".*?\"/g, '')
+      .replace(/[^\w\s\!\.\,\?\d\|\']/gi, '')
+      .trim()
   )
   frase = fraseClean
   const dict = [
@@ -17,7 +21,11 @@ export default function codeFinder(frase: string[]) {
   ]
 
   const newFrase = frase.reduce((acc: string[], word) => {
-    const wordClean = word.replace(/[^\w\s\!\.\,\?\d\|\']/gi, '').trim()
+    const wordClean = word
+      .replace(/\/.*?\//g, '')
+      .replace(/\".*?\"/g, '')
+      .replace(/[^\w\s\!\.\,\?\d\|\']/gi, '')
+      .trim()
     const iconCode = '' //word.match(/[^\w\s\!\.\,\?\d\|\']/gi)?.join('')
     if (word.includes('|')) {
       const codesInFrase: string[] = wordClean.split(/\s\|\s|\|/)

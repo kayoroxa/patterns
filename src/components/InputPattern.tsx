@@ -10,7 +10,6 @@ export default function InputPattern({
   const [scriptRaw, setScriptRaw] = useState<string>(initialValue || '')
   const textArea = useRef<HTMLTextAreaElement>(null)
 
-  debugger
   useEffect(() => {
     onChange(scriptRaw)
   }, [scriptRaw])

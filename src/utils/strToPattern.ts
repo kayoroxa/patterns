@@ -27,7 +27,6 @@ export interface Type {
 }
 
 export function strToPattern(allPatternsStr: string): Type[] | false {
-  debugger
   if (!allPatternsStr) return false
   if (typeof allPatternsStr !== 'string') return allPatternsStr
 

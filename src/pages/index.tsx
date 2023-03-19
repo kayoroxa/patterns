@@ -18,7 +18,6 @@ export default function PlayPage() {
   const [anki, setAnki] = useState<{ [key: string]: number }>({})
 
   const [initialState, setInitialState] = useLocalStorage('patterns', '')
-  // debugger
   const [bigData, setBigData] = useState<Type[]>(_bigData)
 
   return (

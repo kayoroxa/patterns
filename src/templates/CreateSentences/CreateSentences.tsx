@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { SetStateAction, useEffect, useState } from 'react'
 import Cell from '../../components/cell'
 import ProgressBar from '../../components/loader'
-import sentenceCodeFinder from '../../utils/sentenceCodeFinder'
+import sentenceCodeFinderAndSanitize from '../../utils/sentenceCodeFinder'
 import translation from '../../utils/translation'
 import { getLangAlternative } from './funcs'
 import { ContainerCreateSentences } from './styles-create-sentences'
@@ -233,11 +233,15 @@ const CreateSentences = ({
       }
     })
 
+    console.log({
+      sentenceChoice,
+      g: sentenceCodeFinderAndSanitize(sentenceChoice),
+    })
     return {
       sentenceDivided: rawSentenceChoice.map(v =>
         v.replace(/[^\w\s\!\.\,\?\d\|\']/gi, '').trim()
       ),
-      sentence: sentenceCodeFinder(sentenceChoice)
+      sentence: sentenceCodeFinderAndSanitize(sentenceChoice)
         .join(' ')
         .replace(/\s\'/g, "'")
         .replace(/\sn\'t/g, "n't"),
