@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { _AnkiData } from '../templates/CreateSentences/CreateSentences'
+import { _AnkiData } from '../utils/types'
 import CellContainer from './cellContainer'
 
 type ColumnData = {

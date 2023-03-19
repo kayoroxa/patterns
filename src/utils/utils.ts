@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { IBlocks } from '../templates/CreateSentences/CreateSentences'
+import { IBlocks } from './types'
 
 interface Props {
   arr: string[]
