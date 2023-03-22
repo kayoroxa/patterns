@@ -54,9 +54,19 @@ export default function useKey(funcs: any = {}, dependencyList = []) {
         e.preventDefault()
         funcs['home']()
       }
-      if (e.key.toLowerCase() === 'f') {
+      if (e.key.toLowerCase() === 'f' || e.key === 'Tab') {
         e.preventDefault()
         funcs['f']()
+      }
+      if (e.key === 'PageDown') {
+        e.preventDefault()
+        //scroll to bottom
+        window.scrollTo(0, document.body.scrollHeight)
+      }
+      if (e.key === 'PageUp') {
+        e.preventDefault()
+        //scroll to top
+        window.scrollTo(0, 0)
       }
 
       // if (e.key === 'c') {
