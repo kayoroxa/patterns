@@ -50,6 +50,20 @@ export const ContainerCreateSentences = styled.div`
     justify-content: center;
     align-items: center;
     gap: 20px;
+    margin-top: -15vh;
+
+    * {
+      font-size: 3.1rem;
+    }
+  }
+
+  .after.word {
+    font-size: 3rem;
+  }
+
+  .after {
+    position: absolute;
+    bottom: 8vh;
   }
 
   .al {
@@ -138,11 +152,6 @@ export const ContainerCreateSentences = styled.div`
       background: ${dark ? '#545a87' : '#545a87'};
       transform: scale(1.05);
     }
-  }
-
-  .after {
-    position: absolute;
-    bottom: 30px;
   }
 
   .emphasis {
