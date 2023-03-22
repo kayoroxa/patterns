@@ -9,7 +9,7 @@ export default function Loading({ loading, onEnd }: Props) {
   //     setTimeout(onEnd, 5000)
   //   }
   // }, [loading])
-  console.log(loading)
+
   return (
     <MyLoading loading={loading}>
       <div className="loading"></div>

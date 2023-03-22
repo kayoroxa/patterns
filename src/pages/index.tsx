@@ -21,8 +21,6 @@ export default function PlayPage() {
   const [initialState, setInitialState] = useLocalStorage('patterns', '')
   const [bigData, setBigData] = useState<Type[]>(_bigData)
 
-  console.log(anki)
-
   return (
     <div>
       {/* <ReactAudioPlayer src="tick tock.mp3" autoPlay controls /> */}

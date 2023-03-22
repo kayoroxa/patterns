@@ -4,12 +4,12 @@ import styled from 'styled-components'
 const ProgressBack = styled.div<{ isLoading: boolean }>`
   opacity: 0.5;
   position: fixed;
-  bottom: 90px;
+  bottom: 10vh;
   left: 50%;
   transform: translateX(-50%);
   background-color: #cacaca;
-  width: 700px;
-  height: 30px;
+  width: 900px;
+  height: 40px;
   display: ${props => (props.isLoading ? 'block' : 'none')};
 
   border-radius: 30px;

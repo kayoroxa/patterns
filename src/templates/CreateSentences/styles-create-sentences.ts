@@ -57,15 +57,6 @@ export const ContainerCreateSentences = styled.div`
     }
   }
 
-  .after.word {
-    font-size: 3rem;
-  }
-
-  .after {
-    position: absolute;
-    bottom: 8vh;
-  }
-
   .al {
     padding: 15px;
     border: 3px solid ${dark ? '#4a507c' : '#4a507c'};
@@ -130,10 +121,6 @@ export const ContainerCreateSentences = styled.div`
     }
   }
 
-  .word.small {
-    font-size: 0.8rem;
-  }
-
   button {
     cursor: pointer;
     position: absolute;
@@ -169,5 +156,25 @@ export const ContainerCreateSentences = styled.div`
     position: absolute;
     top: 40px;
     right: 20px;
+  }
+
+  .after.word {
+    font-size: 3rem;
+    background: ${dark ? 'rgba(57, 61, 94, 0.7)' : 'hsl(240, 1%, 86%)'};
+    color: ${dark ? 'white' : 'black'};
+
+    :hover {
+      background: rgba(57, 61, 94, 1);
+      color: white;
+    }
+  }
+
+  .after {
+    position: absolute;
+    bottom: 8vh;
+  }
+
+  .word.small {
+    font-size: 0.8rem;
   }
 `

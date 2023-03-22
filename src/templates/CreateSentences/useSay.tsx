@@ -33,8 +33,6 @@ export function useSay(
     ) {
       const utter = new SpeechSynthesisUtterance()
 
-      console.log('1 vezinha')
-
       setSpeech().then(() => {
         const synth = window.speechSynthesis
         const voices = synth.getVoices()
@@ -59,7 +57,6 @@ export function useSay(
 
         voices.forEach(voice => {
           if (voice.name === selectedOption) {
-            console.log(voice)
             utter.voice = voice
           }
         })
