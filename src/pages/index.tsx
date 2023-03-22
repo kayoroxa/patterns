@@ -4,6 +4,7 @@ import CreateSentences from '../templates/CreateSentences'
 // import { useLocalStorage } from 'react-use'
 import InputPattern from '../components/InputPattern'
 import { bigData as _bigData } from '../data/present'
+
 import { strToPattern, Type } from '../utils/strToPattern'
 
 const after = [

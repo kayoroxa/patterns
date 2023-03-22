@@ -12,7 +12,7 @@ interface Props {
 
 function getOnlyVisible(arr) {
   const elementos = Array.from(document.querySelectorAll('.cell.show')).map(
-    (item: HTMLElement) => item.innerText
+    (item: HTMLElement) => item.innerText.toLowerCase()
     // .replace(/\/.*?\//g, '')
     // .replace(/\".*?\"/g, '')
     // .replace(/[^\w\s\!\.\,\?\d\|\']/gi, '')
@@ -22,7 +22,7 @@ function getOnlyVisible(arr) {
   const elementShuffle = _.shuffle(elementos)
 
   const sortedFind = elementShuffle.find(item => {
-    return arr.includes(item)
+    return arr.map(v => v.toLowerCase()).includes(item.toLowerCase())
   })
   const newIndex = arr.findIndex(v => v === sortedFind)
   return { newIndex, sortedFind }

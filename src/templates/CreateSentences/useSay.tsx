@@ -94,7 +94,12 @@ export function useSay(
   // })
 
   function speak() {
-    if (utterThis && on) {
+    let selectedText = window.getSelection().toString()
+    if (utterThis && on && selectedText) {
+      utterThis.text = selectedText.match(/[\w|']+/gi)[0]
+      window.speechSynthesis.speak(utterThis)
+      return
+    } else if (utterThis && on) {
       window.speechSynthesis.speak(utterThis)
     }
   }
