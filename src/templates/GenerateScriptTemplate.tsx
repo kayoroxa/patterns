@@ -1,8 +1,6 @@
-import { useContext } from 'react'
-
 import CellOption from '../atoms/CellOption'
-import { AppContext } from '../context/AppContext'
 import ModalSelect from '../organisms/ModalSelect'
+import useAppStore from '../store/useAppStore'
 
 export type Category = {
   id: number
@@ -10,6 +8,7 @@ export type Category = {
   options: {
     name: string
     countReview: number
+    isOnBoard?: boolean
   }[]
 }
 
@@ -18,17 +17,14 @@ interface IProps {
 }
 
 export default function GenerateScriptTemplate({ data: categories }: IProps) {
-  const { setModalCategorySelected, modalCategorySelected } =
-    useContext(AppContext)
+  const changeModalCategoryId = useAppStore(s => s.changeModalCategoryId)
 
   function handleClick(id) {
-    setModalCategorySelected(id)
+    changeModalCategoryId(id)
   }
   return (
     <div>
-      <h1 className="py-6 px-4 text-2xl">
-        Generate Script: {modalCategorySelected}
-      </h1>
+      <h1 className="py-6 px-4 text-2xl">Generate Script:</h1>
       <main className="flex gap-4 px-5 justify-center">
         {categories.map(category => (
           <div
@@ -44,9 +40,11 @@ export default function GenerateScriptTemplate({ data: categories }: IProps) {
                 +
               </button>
             </header>
-            {category.options.map(option => (
-              <CellOption option={option} key={option.name} />
-            ))}
+            {category.options
+              .filter(op => op.isOnBoard)
+              .map(option => (
+                <CellOption option={option} key={option.name} />
+              ))}
           </div>
         ))}
       </main>

@@ -4,7 +4,7 @@
       "id": 1,
       "name": "who",
       "options": [
-        { "name": "i", "countReview": 0 },
+        { "name": "i", "countReview": 0, "isOnBoard": true },
         { "name": "he", "countReview": 0 },
         { "name": "she", "countReview": 1 },
         { "name": "it", "countReview": 0 },
