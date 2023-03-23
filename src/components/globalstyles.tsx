@@ -1,6 +1,12 @@
 import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
   html,
   body {
     color: ${({ theme }) => theme.colors.primary};
