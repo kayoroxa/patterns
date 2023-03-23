@@ -5,6 +5,7 @@ import ColumnBlocks from '../../components/Column'
 import ProgressBar from '../../components/loader'
 import { default as useGenerate } from '../../hooks/useGenerate'
 import useKey from '../../hooks/useKey'
+import InfiniteView from '../../organisms/InfiniteView'
 import translation from '../../utils/translation'
 import { IBlocks, IData, _AnkiData } from '../../utils/types'
 import { ContainerCreateSentences } from './styles-create-sentences'
@@ -179,27 +180,33 @@ const CreateSentences = ({
     <ContainerCreateSentences>
       <div className="app">
         {showInfos && <button onClick={onNext}>NEXT...</button>}
+        <div className="">
+          <InfiniteView>
+            {dataSentence.dataBlocks.length > 0 && (
+              <div className="flow-container -mt-28">
+                {before && <BeforeColumn data={before} />}
 
-        {dataSentence.dataBlocks.length > 0 && (
-          <div className="flow-container">
-            {before && <BeforeColumn data={before} />}
+                {dataSentence.dataBlocks.map((column, index) => {
+                  if (column.isColumn) {
+                    return (
+                      <ColumnBlocks
+                        key={index}
+                        columnData={column}
+                        anki={anki}
+                        showAnswer={showAnswer}
+                      />
+                    )
+                  } else {
+                    return (
+                      <Cell data={column.cells[0]} showAnswer={showAnswer} />
+                    )
+                  }
+                })}
+              </div>
+            )}
+          </InfiniteView>
+        </div>
 
-            {dataSentence.dataBlocks.map((column, index) => {
-              if (column.isColumn) {
-                return (
-                  <ColumnBlocks
-                    key={index}
-                    columnData={column}
-                    anki={anki}
-                    showAnswer={showAnswer}
-                  />
-                )
-              } else {
-                return <Cell data={column.cells[0]} showAnswer={showAnswer} />
-              }
-            })}
-          </div>
-        )}
         {showAnswer && (
           <div className="after word">{dataSentence.sentence}</div>
         )}

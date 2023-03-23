@@ -50,7 +50,7 @@ export const ContainerCreateSentences = styled.div`
     justify-content: center;
     align-items: center;
     gap: 20px;
-    margin-top: -15vh;
+    /* margin-top: -15vh; */
 
     * {
       font-size: 3.1rem;
