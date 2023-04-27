@@ -23,7 +23,6 @@ export default function CellContainer({ children, _id }: IProps) {
   function handleClick(event) {
     if (event.ctrlKey) {
       const willShow = !show
-      debugger
       if (!willShow) {
         setLastBlockKey(_id)
         noiseControl.putErro()

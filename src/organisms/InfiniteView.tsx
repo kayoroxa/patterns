@@ -23,7 +23,7 @@ const InfiniteView = ({ children }: { children: ReactNode | ReactNode[] }) => {
       <TransformComponent>
         <div
           className="w-screen h-screen flex justify-center items-center"
-          onMouseDown={() => console.log('oi')}
+          // onMouseDown={() => console.log('oi')}
         >
           {children}
         </div>
