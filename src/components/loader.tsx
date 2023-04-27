@@ -37,6 +37,7 @@ export default function ProgressBar({ isLoading, onEnded }: IProps) {
 
   useEffect(() => {
     setPercent(0)
+    if (!audio) return
     if (audio.current && isLoading) {
       audio.current.play()
     }
