@@ -3,6 +3,7 @@ import { DefaultTheme, ThemeProvider } from 'styled-components'
 import GlobalStyle from '../components/globalstyles'
 import AppContextProvider from '../context/AppContext'
 import PlayAudio from '../hooks/playAudio'
+import PlayAudioInaudible from '../hooks/playAudioInaudible'
 import '../styles/globals.css'
 
 const theme: DefaultTheme = {
@@ -16,6 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <PlayAudio />
+      <PlayAudioInaudible />
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <AppContextProvider>

@@ -5,6 +5,7 @@ import CreateSentences from '../templates/CreateSentences'
 import InputPattern from '../components/InputPattern'
 import { bigData as _bigData } from '../data/present'
 
+import ViewNoise from '../atoms/ViewNoise'
 import { strToPattern, Type } from '../utils/strToPattern'
 
 const after = [
@@ -23,6 +24,7 @@ export default function PlayPage() {
 
   return (
     <div>
+      <ViewNoise />
       {/* <ReactAudioPlayer src="tick tock.mp3" autoPlay controls /> */}
       {bigData && (
         <CreateSentences

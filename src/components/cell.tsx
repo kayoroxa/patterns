@@ -11,7 +11,7 @@ interface Props {
 
 export default function Cell({ data, showAnswer }: Props) {
   return (
-    <CellContainer>
+    <CellContainer _id={data.text}>
       <div className="cell">
         <div
           className={`word ${data.isEmphasis && showAnswer ? 'emphasis' : ''}`}

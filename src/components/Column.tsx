@@ -22,7 +22,7 @@ export default function ColumnBlocks({ columnData, anki, showAnswer }: Props) {
     <div className="al">
       <div className="al-inside">
         {columnData.cells.map((v, key) => (
-          <CellContainer>
+          <CellContainer _id={v.text}>
             <div
               className="tag"
               style={{

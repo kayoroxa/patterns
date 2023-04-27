@@ -6,6 +6,12 @@ export default function useKey(funcs: any = {}, dependencyList = []) {
       const element = document.activeElement
       if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') return
 
+      if (Object.keys(funcs).includes(e.key)) {
+        e.preventDefault()
+        funcs[e.key]()
+        return
+      }
+
       if (e.key === 'Enter' || e.key === 'd') {
         e.preventDefault()
         funcs.enter()

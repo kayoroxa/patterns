@@ -5,7 +5,9 @@ import ColumnBlocks from '../../components/Column'
 import ProgressBar from '../../components/loader'
 import { default as useGenerate } from '../../hooks/useGenerate'
 import useKey from '../../hooks/useKey'
+import useNoiseControl from '../../hooks/useNoise'
 import InfiniteView from '../../organisms/InfiniteView'
+import useBlockStore from '../../store/useBlockStore'
 import translation from '../../utils/translation'
 import { IBlocks, IData, _AnkiData } from '../../utils/types'
 import { ContainerCreateSentences } from './styles-create-sentences'
@@ -45,6 +47,7 @@ const CreateSentences = ({
   const [showInfos, setShowInfos] = useState(true)
   const [allowSpeak, setAllowSpeak] = useState(true)
   const [showProgressBar, setShowProgressBar] = useState(false)
+  const toggleShowAll = useBlockStore(state => state.toggleShowAll)
   // const [score, setScore] = useState(0)
   // const [level, setLevel] = useState(2)
 
@@ -120,7 +123,7 @@ const CreateSentences = ({
     language,
     true //lang == 'en' && allowSpeak
   )
-
+  const noiseControl = useNoiseControl()
   //
 
   const keys = {
@@ -164,13 +167,24 @@ const CreateSentences = ({
       setShowProgressBar(true)
     },
     home: () => {
+      noiseControl.reset()
       setShowProgressBar(false)
       setShowAnswer(false)
       onReloadSentenceRandom()
       // setAllowSpeak(false)
     },
+    r: () => {
+      noiseControl.putErro()
+      setShowProgressBar(false)
+      setShowAnswer(false)
+    },
     f: () => {
       speak()
+    },
+    '-'() {
+      toggleShowAll()
+      setShowAnswer(false)
+      noiseControl.reset()
     },
   }
 
