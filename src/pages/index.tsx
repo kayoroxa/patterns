@@ -67,12 +67,13 @@ export default function PlayPage() {
         )}
       </div> */}
       <InputPattern
-        onChange={pattern => {
-          if (!pattern) return
-          const patterns = strToPattern(pattern)
+        onChange={patternsStr => {
+          if (!patternsStr) return
+
+          const patterns = strToPattern(patternsStr)
 
           if (!patterns) return
-          setInitialState(pattern)
+          setInitialState(patternsStr)
           setBigData(patterns)
         }}
         initialValue={initialState}

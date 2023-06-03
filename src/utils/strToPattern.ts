@@ -33,7 +33,7 @@ export function strToPattern(allPatternsStr: string): Type[] | false {
   allPatternsStr = allPatternsStr?.trim()
 
   const bigData = allPatternsStr
-    .split(/\/\/+/g)
+    .split(/[*-\/\\]{2,}/g)
     .map(strPattern => transform(strPattern))
 
   return bigData

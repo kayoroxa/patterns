@@ -212,7 +212,11 @@ const CreateSentences = ({
                     )
                   } else {
                     return (
-                      <Cell data={column.cells[0]} showAnswer={showAnswer} />
+                      <Cell
+                        data={column.cells[0]}
+                        key={index}
+                        showAnswer={showAnswer}
+                      />
                     )
                   }
                 })}
